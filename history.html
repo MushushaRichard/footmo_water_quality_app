@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality History</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Quality History</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>pH Level</th>
+                    <th>Chlorine Level (ppm)</th>
+                    <th>Bacteria Presence</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+        <a href="index.html" class="back-link">Go Back</a>
+    </div>
+
+    <script>
+        const historyBody = document.getElementById('historyBody');
+        const historyData = JSON.parse(localStorage.getItem('waterQualityHistory')) || [];
+
+        historyData.forEach(data => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${data.ph}</td><td>${data.chlorine}</td><td>${data.bacteria}</td><td>${data.result}</td>`;
+            historyBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

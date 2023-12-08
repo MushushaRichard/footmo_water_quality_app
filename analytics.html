@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality Analytics</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Quality Analytics</h1>
+        <canvas id="chart"></canvas>
+        <a href="index.html" class="back-link">Go Back</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const historyData = JSON.parse(localStorage.getItem('waterQualityHistory')) || [];
+
+        // Extract data for analysis
+        const phData = historyData.map(entry => entry.ph);
+        const chlorineData = historyData.map(entry => entry.chlorine);
+
+        // Draw charts
+        const ctx = document.getElementById('chart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: historyData.map((entry, index) => `Test ${index + 1}`),
+                datasets: [
+                    {
+                        label: 'pH Level',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        data: phData,
+                        fill: false
+                    },
+                    {
+                        label: 'Chlorine Level (ppm)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        data: chlorineData,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        min: 0,
+                        max: 14,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
